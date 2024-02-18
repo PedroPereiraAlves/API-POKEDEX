@@ -1,5 +1,8 @@
-public interface IHabilidadePokemon
+namespace WebApi.Model
 {
-    void Add(IHabilidadePokemon habilidadePokemon);
-    List<HabilidadePokemon> Get();
+    public interface IHabilidadePokemon
+    {
+        void Add(HabilidadePokemon habilidadePokemon);
+        List<HabilidadePokemon> Get();
+    }
 }

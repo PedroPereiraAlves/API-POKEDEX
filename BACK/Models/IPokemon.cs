@@ -1,5 +1,9 @@
-public interface IPokemon
+namespace WebApi.Model
 {
-    void Add(Pokemon pokemon);
-    List<Pokemon> Get();
+    public interface IPokemon
+    {
+        void Add(Pokemon pokemon);
+        List<Pokemon> Get();
+    }
+
 }

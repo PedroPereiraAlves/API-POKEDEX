@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX\\BACK\\API_POKEDEX.csproj": {}
+    "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX_GIT\\API-POKEDEX\\BACK\\API_POKEDEX.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX\\BACK\\API_POKEDEX.csproj": {
+    "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX_GIT\\API-POKEDEX\\BACK\\API_POKEDEX.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX\\BACK\\API_POKEDEX.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX_GIT\\API-POKEDEX\\BACK\\API_POKEDEX.csproj",
         "projectName": "API_POKEDEX",
-        "projectPath": "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX\\BACK\\API_POKEDEX.csproj",
+        "projectPath": "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX_GIT\\API-POKEDEX\\BACK\\API_POKEDEX.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX\\BACK\\obj\\",
+        "outputPath": "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX_GIT\\API-POKEDEX\\BACK\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -46,11 +46,11 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[6.0.0, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[6.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

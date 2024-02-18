@@ -1,3 +1,8 @@
+using Microsoft.OpenApi.Models;
+using WebApi.Model;
+using WebApi.Infra;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,9 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_POKEDEX", Version = "1.0" });
+});
 
 builder.Services.AddTransient<IPokemon, PokemonRepository>();
+builder.Services.AddTransient<IHabilidadePokemon, HabilidadePokemonRepository>();
 
 var app = builder.Build();
 
@@ -15,10 +24,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API_POKEDEX 1.0");
+        c.RoutePrefix = string.Empty; 
+    });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
