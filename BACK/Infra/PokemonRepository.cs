@@ -18,5 +18,8 @@ namespace WebApi.Infra
         public List<Pokemon> Get()
             => _context.pokemon.ToList();
         
+        public Pokemon? GetPokemon(string nomePokemon)
+            => _context.pokemon.FirstOrDefault(x => x.nomepokemon == nomePokemon);
+        
     }
 }

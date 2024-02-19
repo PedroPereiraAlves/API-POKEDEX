@@ -21,6 +21,18 @@ public class PokemonsController : ControllerBase
         return Ok(pokemons);
     }
 
+    [HttpGet("{nomepokemon}",Name = "GetPokemon")]
+    public IActionResult GetPokemon(string nomepokemon)
+    {
+        var pokemonEncontrado = _pokemonRepository.GetPokemon(nomepokemon);
+
+        if(pokemonEncontrado is null)
+            return BadRequest("O pokemon buscado não foi encontrado");
+
+        return Ok(pokemonEncontrado);
+                                    
+    }
+
     [HttpPost]
     public IActionResult AdicionarPokemon(PokemonAddViewModel pokemon)
     {
