@@ -13,8 +13,8 @@ class Program
             .AddTransient<AtualizacaoPokemonService>()
             .BuildServiceProvider();
 
-        // // Obter o serviço e realizar a atualização
-        // var atualizacaoService = serviceProvider.GetRequiredService<AtualizacaoPokemonService>();
-        // await atualizacaoService.AtualizarUrlsImagemPokemonsAsync();
+        // Obter o serviço e realizar a atualização
+        var atualizacaoService = serviceProvider.GetRequiredService<AtualizacaoPokemonService>();
+        await atualizacaoService.AtualizarUrlsImagemPokemonsAsync();
     }
 }

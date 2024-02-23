@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lIu9ovtNsrlUxg72NVwwSfMTuu1vGaZtFJLmB2FDQrqMzJ46WZ8jqCJKPlyQP1VXl0Z9NBFQOdn6S7RZmuvBAw==",
+  "dgSpecHash": "+y3b5bXn+v0ysZtRyGKflv6EzhmO/5EU2AxxoYX2/bor1sJVWh+hBO/x6zVd6Upe04842DYdHpW1PqEVD15qdw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX_GIT\\API-POKEDEX\\serviços\\AtualizaPokemonService\\AtualizaPokemonService.csproj",
+  "projectFilePath": "C:\\Users\\PC\\Pictures\\material faculdade\\projetos_pessoais\\API_POKEDEX_GIT\\API-POKEDEX\\SERVIÇOS\\AtualizaPokemonService\\AtualizaPokemonService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.0\\microsoft.entityframeworkcore.6.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.0\\microsoft.entityframeworkcore.abstractions.6.0.0.nupkg.sha512",

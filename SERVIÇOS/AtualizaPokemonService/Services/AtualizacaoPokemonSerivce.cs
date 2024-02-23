@@ -1,4 +1,6 @@
+using System;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 public class AtualizacaoPokemonService
 {
@@ -13,7 +15,10 @@ public class AtualizacaoPokemonService
 
     public async Task AtualizarUrlsImagemPokemonsAsync()
     {
-        var pokemons = _dbContext.pokemon.ToList();
+        try
+        {
+
+        var pokemons = _dbContext.pokemon.ToList().OrderBy(x => x.pokemonid);
 
         foreach (var pokemon in pokemons)
         {
@@ -21,19 +26,36 @@ public class AtualizacaoPokemonService
 
             if (urlImagem != null)
                 pokemon.url = urlImagem;
-            
-        }
 
-        await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
+        }
+        
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Erro na desserialização do JSON: " + ex.Message);
+        }
     }
 
     private async Task<string> ObterUrlImagemPokemonAsync(string nomePokemon)
     {
         for(var i = 1; i < 151; i++)
         {
-            var response = await _httpClient.GetFromJsonAsync<ApiResponse>("https://pokeapi.co/api/v2/pokemon/" + i + "/");
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<ApiResponse>("https://pokeapi.co/api/v2/pokemon/" + i + "/");
 
-            return response?.Sprites?.FrontDefault;
+                if (response?.sprites != null)
+                {
+                    return response.sprites.FrontDefault;
+                }
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine("Erro na desserialização do JSON: " + ex.Message);
+            }
+
+            
         }
 
         return nomePokemon;
