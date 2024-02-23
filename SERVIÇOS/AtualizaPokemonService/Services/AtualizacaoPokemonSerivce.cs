@@ -29,13 +29,13 @@ public class AtualizacaoPokemonService
 
     private async Task<string> ObterUrlImagemPokemonAsync(string nomePokemon)
     {
-        var response = "";
-
         for(var i = 1; i < 151; i++)
         {
-            response = await _httpClient.GetFromJsonAsync<ApiResponse>("https://pokeapi.co/api/v2/pokemon/" + i + "/");
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse>("https://pokeapi.co/api/v2/pokemon/" + i + "/");
+
+            return response?.Sprites?.FrontDefault;
         }
 
-        return response?.Sprites?.FrontDefault;
+        return nomePokemon;
     }
 }
