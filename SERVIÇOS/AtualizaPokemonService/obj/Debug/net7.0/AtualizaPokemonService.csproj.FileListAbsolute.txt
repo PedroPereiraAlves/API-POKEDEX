@@ -1,0 +1,5 @@
+C:\Users\PC\Pictures\material faculdade\projetos_pessoais\API_POKEDEX_GIT\API-POKEDEX\serviços\AtualizaPokemonService\obj\Debug\net7.0\AtualizaPokemonService.csproj.AssemblyReference.cache
+C:\Users\PC\Pictures\material faculdade\projetos_pessoais\API_POKEDEX_GIT\API-POKEDEX\serviços\AtualizaPokemonService\obj\Debug\net7.0\AtualizaPokemonService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Pictures\material faculdade\projetos_pessoais\API_POKEDEX_GIT\API-POKEDEX\serviços\AtualizaPokemonService\obj\Debug\net7.0\AtualizaPokemonService.AssemblyInfoInputs.cache
+C:\Users\PC\Pictures\material faculdade\projetos_pessoais\API_POKEDEX_GIT\API-POKEDEX\serviços\AtualizaPokemonService\obj\Debug\net7.0\AtualizaPokemonService.AssemblyInfo.cs
+C:\Users\PC\Pictures\material faculdade\projetos_pessoais\API_POKEDEX_GIT\API-POKEDEX\serviços\AtualizaPokemonService\obj\Debug\net7.0\AtualizaPokemonService.csproj.CoreCompileInputs.cache
