@@ -16,7 +16,7 @@ public class PokemonsController : ControllerBase
     [HttpGet]
     public IActionResult GetAllPokemons()
     {
-        var pokemons = _pokemonRepository.Get();
+        var pokemons = _pokemonRepository.Get().OrderBy(x => x.pokemonid);
         
         return Ok(pokemons);
     }

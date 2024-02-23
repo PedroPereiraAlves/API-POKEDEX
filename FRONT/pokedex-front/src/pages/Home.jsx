@@ -7,32 +7,11 @@ import { Container, Grid } from '@mui/material';
 export const Home = () => {
 
   const [pokemons, setPokemons] = useState([]);
-  const [fotopokemons, setFotoPokemons] = useState([]);
 
   useEffect(() => {
     GetAllPokemons()
-    GetFotoPokemonCompony()
   }, []);
 
-  const GetFotoPokemonCompony = () => {
-      var endpoints = [];
-      for(var i = 0; i++; i < 50){
-        endpoints.push(`https://pokeapi.co/api/v2/pokemon/${i}`);
-      }
-      
-       axios
-      .all(endpoints.map((endpoint) => axios.get(endpoint)))
-      .then((responses) => {
-        const fotoPokemons = responses.map((response) => ({
-          nomepokemon: response.data.name,
-          foto: response.data.sprites.front_default,
-        }));
-        setFotoPokemons(fotoPokemons);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }
   const GetAllPokemons = () => {
   axios
   .get("http://localhost:5195/api/v1/pokemon/")
@@ -51,7 +30,9 @@ export const Home = () => {
         <Grid container>
           {pokemons.map((pokemon, key) => (
               <Grid item xs={3} key={key}>
-                <PokemonCards nomepokemon={pokemon.nomepokemon}/>
+                <PokemonCards nomepokemon={pokemon.nomepokemon}
+                              url={pokemon.url}
+                />  
               </Grid>
           ))}
         </Grid>
