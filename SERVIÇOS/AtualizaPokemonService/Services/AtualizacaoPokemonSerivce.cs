@@ -18,18 +18,32 @@ public class AtualizacaoPokemonService
         try
         {
 
-        var pokemons = _dbContext.pokemon.ToList().OrderBy(x => x.pokemonid);
+            var pokemons = _dbContext.pokemon.ToList().OrderBy(x => x.pokemonid);
+
+            int i = 1;
 
         foreach (var pokemon in pokemons)
         {
-            string urlImagem = await ObterUrlImagemPokemonAsync(pokemon.nomepokemon);
+            if (pokemon.url != null)
+            {
+                continue; // Se a URL já estiver definida, passe para o próximo Pokémon
+            }
 
-            if (urlImagem != null)
-                pokemon.url = urlImagem;
+            while (i < 151)
+            {
+                string urlImagem = await ObterUrlImagemPokemonAsync(i);
 
-            await _dbContext.SaveChangesAsync();
+                if (urlImagem != null)
+                {
+                    pokemon.url = urlImagem;
+                    await _dbContext.SaveChangesAsync();
+                    i++; // Atualiza o índice para o próximo Pokémon
+                    break; // Sai do loop interno após encontrar a URL
+                }
+
+                i++; // Atualiza o índice para verificar o próximo Pokémon
+            }
         }
-        
         }
         catch (Exception ex)
         {
@@ -37,27 +51,22 @@ public class AtualizacaoPokemonService
         }
     }
 
-    private async Task<string> ObterUrlImagemPokemonAsync(string nomePokemon)
+    private async Task<string> ObterUrlImagemPokemonAsync(int numeroPokemon)
     {
-        for(var i = 1; i < 151; i++)
+        try
         {
-            try
-            {
-                var response = await _httpClient.GetFromJsonAsync<ApiResponse>("https://pokeapi.co/api/v2/pokemon/" + i + "/");
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse>("https://pokeapi.co/api/v2/pokemon/" + numeroPokemon + "/");
 
-                if (response?.sprites != null)
-                {
-                    return response.sprites.FrontDefault;
-                }
-            }
-            catch (JsonException ex)
+            if (response?.sprites != null)
             {
-                Console.WriteLine("Erro na desserialização do JSON: " + ex.Message);
+                return response.sprites.FrontDefault;
             }
-
-            
+        }
+        catch (JsonException ex)
+        {
+            Console.WriteLine("Erro na desserialização do JSON: " + ex.Message);
         }
 
-        return nomePokemon;
+        return null;
     }
 }
