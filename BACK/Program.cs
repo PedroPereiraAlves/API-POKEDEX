@@ -18,6 +18,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddTransient<IPokemon, PokemonRepository>();
 builder.Services.AddTransient<IHabilidadePokemon, HabilidadePokemonRepository>();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +32,13 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; 
     });
 }
+
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyHeader()
+           .AllowAnyMethod();
+});
 
 // app.UseHttpsRedirection();
 
