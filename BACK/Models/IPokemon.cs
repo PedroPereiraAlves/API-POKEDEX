@@ -4,7 +4,8 @@ namespace WebApi.Model
     {
         void Add(Pokemon pokemon);
         List<Pokemon> Get();
-        Pokemon? GetPokemon(string nomePokemon);
+        Pokemon? GetPokemon(string nomepokemon);
+        List<Pokemon> GetPokemonsByNome(string nomepokemon);
     }
 
 }

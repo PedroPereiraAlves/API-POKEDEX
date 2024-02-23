@@ -24,7 +24,7 @@ public class PokemonsController : ControllerBase
     [HttpGet("{nomepokemon}",Name = "GetPokemon")]
     public IActionResult GetPokemon(string nomepokemon)
     {
-        var pokemonEncontrado = _pokemonRepository.GetPokemon(nomepokemon);
+        var pokemonEncontrado = _pokemonRepository.GetPokemonsByNome(nomepokemon);
 
         if(pokemonEncontrado is null)
             return BadRequest("O pokemon buscado não foi encontrado");

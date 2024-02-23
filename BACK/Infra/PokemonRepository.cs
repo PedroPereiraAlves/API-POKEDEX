@@ -18,8 +18,13 @@ namespace WebApi.Infra
         public List<Pokemon> Get()
             => _context.pokemon.ToList();
         
-        public Pokemon? GetPokemon(string nomePokemon)
-            => _context.pokemon.FirstOrDefault(x => x.nomepokemon == nomePokemon);
+        public Pokemon? GetPokemon(string nomepokemon)
+            => _context.pokemon.FirstOrDefault(x => x.nomepokemon == nomepokemon);
+
+        public List<Pokemon> GetPokemonsByNome(string nomepokemon)
+        => _context.pokemon
+                    .Where(p => EF.Functions.ILike(p.nomepokemon, "%" + nomepokemon + "%"))
+                    .ToList();
         
     }
 }

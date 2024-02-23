@@ -51,7 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar({pokemonFiltrado}) {
   return (
     <Box sx={{ flexGrow: 1, marginBottom:"2em" }}>
       <AppBar position="static">
@@ -71,9 +71,9 @@ export default function NavBar() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            POKEDEX
           </Typography>
-          <Search>
+          <Search onChange={(e) => pokemonFiltrado(e.target.value)}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
