@@ -1,5 +1,7 @@
+namespace Pokedex.Api.Models;
+
 public interface ITipoPokemon
 {
-    void Add(ITipoPokemon tipoPokemon);
-    List<TipoPokemon>Get();
+    void Add(TipoPokemon tipoPokemon);
+    List<TipoPokemon> Get();
 }

@@ -1,5 +1,7 @@
+namespace Pokedex.Api.Models;
+
 public interface ITipoFraquezaPokemon
 {
-    void Add(ITipoFraquezaPokemon tipoFraquezaPokemon);
+    void Add(TipoFraquezaPokemon tipoFraquezaPokemon);
     List<TipoFraquezaPokemon> Get();
 }
