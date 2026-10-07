@@ -1,22 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using Pokedex.ImageSync.Models;
 
-public class ConnectionContext : DbContext
+namespace Pokedex.ImageSync.Data;
+
+public class ConnectionContext(DbContextOptions<ConnectionContext> options) : DbContext(options)
 {
-    public DbSet<Pokemon> pokemon {get; set;}
+    public DbSet<Pokemon> pokemon => Set<Pokemon>();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(
-            "Server=localhost;"+
-            "Port=5432;Database=pokedex;"+
-            "User Id=postgres;"+
-            "Password=995736;");
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Pokemon>()
+            .HasKey(pokemon => pokemon.pokemonid);
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-                
-                modelBuilder.Entity<Pokemon>()
-                    .HasKey(h => h.pokemonid);// Definindo HabilidadeId como chave primária
-
-                base.OnModelCreating(modelBuilder);
-            }
+        base.OnModelCreating(modelBuilder);
+    }
 }

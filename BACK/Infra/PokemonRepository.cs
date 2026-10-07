@@ -1,30 +1,26 @@
-
 using Microsoft.EntityFrameworkCore;
-using WebApi.Model;
+using Pokedex.Api.Models;
 
-namespace WebApi.Infra
+namespace Pokedex.Api.Infra;
+
+public class PokemonRepository(ConnectionContext context) : IPokemonRepository
 {
-    public class PokemonRepository : IPokemon
+    public async Task AddAsync(Pokemon pokemon, CancellationToken cancellationToken)
     {
-        private readonly ConnectionContext _context = new ConnectionContext();
-
-        public void Add(Pokemon pokemon)
-        {
-            _context.pokemon.Add(pokemon);
-
-            _context.SaveChanges();
-        } 
-        
-        public List<Pokemon> Get()
-            => _context.pokemon.ToList();
-        
-        public Pokemon? GetPokemon(string nomepokemon)
-            => _context.pokemon.FirstOrDefault(x => x.nomepokemon == nomepokemon);
-
-        public List<Pokemon> GetPokemonsByNome(string nomepokemon)
-        => _context.pokemon
-                    .Where(p => EF.Functions.ILike(p.nomepokemon, "%" + nomepokemon + "%"))
-                    .ToList();
-        
+        context.pokemon.Add(pokemon);
+        await context.SaveChangesAsync(cancellationToken);
     }
+
+    public Task<List<Pokemon>> GetAsync(CancellationToken cancellationToken)
+        => context.pokemon
+            .AsNoTracking()
+            .OrderBy(pokemon => pokemon.pokemonid)
+            .ToListAsync(cancellationToken);
+
+    public Task<List<Pokemon>> GetByNomeAsync(string nomepokemon, CancellationToken cancellationToken)
+        => context.pokemon
+            .AsNoTracking()
+            .Where(pokemon => EF.Functions.ILike(pokemon.nomepokemon, LikePatterns.Contains(nomepokemon), "\\"))
+            .OrderBy(pokemon => pokemon.pokemonid)
+            .ToListAsync(cancellationToken);
 }

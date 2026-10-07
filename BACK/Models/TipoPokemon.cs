@@ -1,5 +1,7 @@
+namespace Pokedex.Api.Models;
+
 public class TipoPokemon
 {
-    public int PokemonId {get; set;}
-    public string Tipo {get; set;}
+    public int PokemonId { get; set; }
+    public string Tipo { get; set; } = "";
 }

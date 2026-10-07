@@ -1,19 +1,16 @@
-using WebApi.Model;
+using Microsoft.EntityFrameworkCore;
+using Pokedex.Api.Models;
 
-namespace WebApi.Infra
+namespace Pokedex.Api.Infra;
+
+public class HabilidadePokemonRepository(ConnectionContext context) : IHabilidadePokemonRepository
 {
-    public class HabilidadePokemonRepository : IHabilidadePokemon
+    public async Task AddAsync(HabilidadePokemon habilidadePokemon, CancellationToken cancellationToken)
     {
-        private readonly ConnectionContext _context = new ConnectionContext();
-
-        public void Add(HabilidadePokemon habilidadePokemon)
-        {
-        _context.HabilidadePokemon.Add(habilidadePokemon);
-
-        _context.SaveChanges();
-        }
-
-        public List<HabilidadePokemon> Get()
-            => _context.HabilidadePokemon.ToList();
+        context.HabilidadePokemon.Add(habilidadePokemon);
+        await context.SaveChangesAsync(cancellationToken);
     }
+
+    public Task<List<HabilidadePokemon>> GetAsync(CancellationToken cancellationToken)
+        => context.HabilidadePokemon.AsNoTracking().ToListAsync(cancellationToken);
 }

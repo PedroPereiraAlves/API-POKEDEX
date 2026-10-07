@@ -1,48 +1,58 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Model;
-using WebApi.ViewModel;
+using Pokedex.Api.Contracts;
+using Pokedex.Api.Infra;
+using Pokedex.Api.Models;
+
+namespace Pokedex.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/pokemon")]
-public class PokemonsController : ControllerBase
+public class PokemonsController(IPokemonRepository pokemonRepository) : ControllerBase
 {
-    private readonly IPokemon _pokemonRepository;
-
-    public PokemonsController(IPokemon pokemonRepository)
-    {
-        _pokemonRepository = pokemonRepository;
-    }
-
     [HttpGet]
-    public IActionResult GetAllPokemons()
+    [ProducesResponseType(typeof(IReadOnlyList<PokemonResponse>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<IReadOnlyList<PokemonResponse>>> GetAll(CancellationToken cancellationToken)
     {
-        var pokemons = _pokemonRepository.Get().OrderBy(x => x.pokemonid);
-        
-        return Ok(pokemons);
+        var pokemons = await pokemonRepository.GetAsync(cancellationToken);
+        return Ok(pokemons.Select(PokemonResponse.FromEntity).ToList());
     }
 
-    [HttpGet("{nomepokemon}",Name = "GetPokemon")]
-    public IActionResult GetPokemon(string nomepokemon)
+    [HttpGet("{nomepokemon}")]
+    [ProducesResponseType(typeof(IReadOnlyList<PokemonResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IReadOnlyList<PokemonResponse>>> GetByNome(
+        string nomepokemon,
+        CancellationToken cancellationToken)
     {
-        var pokemonEncontrado = _pokemonRepository.GetPokemonsByNome(nomepokemon);
+        var nome = nomepokemon.Trim();
+        if (nome.Length == 0)
+        {
+            ModelState.AddModelError(nameof(nomepokemon), "O nome do pokemon é obrigatório.");
+            return ValidationProblem(ModelState);
+        }
 
-        if(pokemonEncontrado is null)
-            return BadRequest("O pokemon buscado não foi encontrado");
+        if (nome.Length > 100)
+        {
+            ModelState.AddModelError(nameof(nomepokemon), "O nome do pokemon deve ter no máximo 100 caracteres.");
+            return ValidationProblem(ModelState);
+        }
 
-        return Ok(pokemonEncontrado);
-                                    
+        // The UI renders this payload as a list, including when the search matches nothing.
+        var pokemons = await pokemonRepository.GetByNomeAsync(nome, cancellationToken);
+        return Ok(pokemons.Select(PokemonResponse.FromEntity).ToList());
     }
 
     [HttpPost]
-    public IActionResult AdicionarPokemon(PokemonAddViewModel pokemon)
+    [ProducesResponseType(typeof(PokemonResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<PokemonResponse>> AdicionarPokemon(
+        PokemonAddViewModel pokemon,
+        CancellationToken cancellationToken)
     {
-        var novoPokemon = new Pokemon(
-            pokemon.NomePokemon,
-            pokemon.SexoPokemon
-        );
+        var novoPokemon = new Pokemon(pokemon.NomePokemon.Trim(), pokemon.SexoPokemon);
+        await pokemonRepository.AddAsync(novoPokemon, cancellationToken);
 
-        _pokemonRepository.Add(novoPokemon);
-        
-        return Ok();
+        var response = PokemonResponse.FromEntity(novoPokemon);
+        return CreatedAtAction(nameof(GetByNome), new { nomepokemon = response.nomepokemon }, response);
     }
 }
